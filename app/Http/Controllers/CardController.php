@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\card;
+use App\Models\Card;
 use Illuminate\Http\Request;
 
 class CardController extends Controller
@@ -49,7 +49,7 @@ class CardController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(card $card)
+    public function show(Card $card)
     {
         return view('content.finances.show', [
             'cards' => $card
@@ -59,7 +59,7 @@ class CardController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(card $card)
+    public function edit(Card $card)
     {
         return view('content.finances.edit', [
             'cards' => $card
@@ -69,7 +69,7 @@ class CardController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, card $card)
+    public function update(Request $request, Card $card)
     {
         $validatedData = $request->validate([
             'name' => 'required|max:255',
@@ -89,7 +89,7 @@ class CardController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(card $card)
+    public function destroy(Card $card)
     {
         Card::destroy($card->id);
 
