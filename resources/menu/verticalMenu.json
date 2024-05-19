@@ -1,0 +1,93 @@
+{
+  "menu": [
+    {
+      "url": "/",
+      "name": "Dashboards",
+      "icon": "menu-icon tf-icons mdi mdi-home-outline",
+      "slug": "dashboard",
+      "submenu": [
+        {
+          "url": "/dashboard",
+          "name": "Analytics",
+          "slug": "dashboard-analytics"
+        }
+      ]
+    },
+    {
+      "name": "Transaction",
+      "icon": "menu-icon tf-icons mdi mdi-window-maximize",
+      "slug": ["expenses","incomes"],
+      "submenu": [
+        {
+          "url": "/expenses",
+          "name": "Expenses",
+          "slug": "expenses.index"
+        },
+        {
+          "url": "/incomes",
+          "name": "Incomes",
+          "slug": "incomes.index"
+        }
+      ]
+    },
+    {
+      "name": "MyFinance",
+      "icon": "menu-icon tf-icons mdi mdi-finance",
+      "slug": ["cards","mutations"],
+      "submenu": [
+        {
+          "url": "/cards",
+          "name": "Cards",
+          "slug": "cards.index"
+        },
+        {
+          "url": "/mutations",
+          "name": "Mutations",
+          "slug": "mutations.index"
+        }
+      ]
+    },
+    {
+      "menuHeader": "Settings"
+    },
+    {
+      "name": "Account",
+      "icon": "menu-icon tf-icons mdi mdi-account-outline",
+      "slug": ["profile", "account-admin"],
+      "submenu": [
+        {
+          "url": "profile",
+          "name": "My Profile",
+          "slug": "profile.edit"
+        },
+        {
+          "url": "account",
+          "name": "Account (Admin)",
+          "slug": "account-admin"
+        }
+      ]
+    },
+    {
+      "name": "Preferences",
+      "icon": "menu-icon tf-icons mdi mdi-account-outline",
+      "slug": ["types","subtypes","source"],
+      "submenu": [
+        {
+          "url": "types",
+          "name": "Kategori",
+          "slug": "types.index"
+        },
+        {
+          "url": "subtypes",
+          "name": "Sub Kategori",
+          "slug": "subtypes.index"
+        },
+        {
+          "url": "sources",
+          "name": "Sumber Pemasukan",
+          "slug": "sources.index"
+        }
+      ]
+    }
+  ]
+}
