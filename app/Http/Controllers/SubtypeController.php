@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\subtype;
+use App\Models\Subtype;
 use App\Http\Requests\StoresubtypeRequest;
 use App\Http\Requests\UpdatesubtypeRequest;
 use Illuminate\Http\Request;
@@ -51,7 +51,7 @@ class SubtypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(subtype $subtype)
+    public function show(Subtype $subtype)
     {
         //
     }
@@ -59,7 +59,7 @@ class SubtypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(subtype $subtype)
+    public function edit(Subtype $subtype)
     {
         return view('content.preferences.subtypes.edit',[
             'subtypes' => $subtype
@@ -69,7 +69,7 @@ class SubtypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, subtype $subtype)
+    public function update(Request $request, Subtype $subtype)
     {
         $id = $request->route('id');
 
@@ -88,7 +88,7 @@ class SubtypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(subtype $subtype)
+    public function destroy(Subtype $subtype)
     {
         Subtype::destroy($subtype->id);
 

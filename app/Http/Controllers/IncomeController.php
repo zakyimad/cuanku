@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\income;
-use App\Models\source;
-use App\Models\card;
+use App\Models\Income;
+use App\Models\Source;
+use App\Models\Card;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 // use App\Http\Requests\StoreincomeRequest;
@@ -94,7 +94,7 @@ class IncomeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(income $expense)
+    public function show(Income $expense)
     {
         return view('content.incomes.show', [
             'incomes' => $income
@@ -104,7 +104,7 @@ class IncomeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(income $income)
+    public function edit(Income $income)
     {
         return view('content.incomes.edit', [
             'incomes' => $income,
@@ -116,7 +116,7 @@ class IncomeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, income $income)
+    public function update(Request $request, Income $income)
     {
         $validatedData = $request->validate([
             'date' => 'required|date',
@@ -146,7 +146,7 @@ class IncomeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(income $income)
+    public function destroy(Income $income)
     {
         if($income->image) {
             Storage::delete($income->image);

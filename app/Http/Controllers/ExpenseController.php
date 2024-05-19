@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\expense;
-use App\Models\type;
-use App\Models\subtype;
-use App\Models\card;
+use App\Models\Expense;
+use App\Models\Type;
+use App\Models\Subtype;
+use App\Models\Card;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -115,7 +115,7 @@ class ExpenseController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(expense $expense)
+    public function show(Expense $expense)
     {
         return view('content.expenses.show', [
             'expenses' => $expense
@@ -125,7 +125,7 @@ class ExpenseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(expense $expense)
+    public function edit(Expense $expense)
     {
         return view('content.expenses.edit', [
             'expenses' => $expense,
@@ -138,7 +138,7 @@ class ExpenseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, expense $expense)
+    public function update(Request $request, Expense $expense)
     {
         $validatedData = $request->validate([
             'title' => 'required|max:255',

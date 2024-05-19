@@ -63,7 +63,7 @@ class TypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(type $type)
+    public function show(Type $type)
     {
         //
     }
@@ -71,7 +71,7 @@ class TypeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(type $type)
+    public function edit(Type $type)
     {
         return view('content.preferences.types.edit',[
             'types' => $type
@@ -81,7 +81,7 @@ class TypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, type $type)
+    public function update(Request $request, Type $type)
     {
         // dd($request);
         $id = $request->route('id');
@@ -108,7 +108,7 @@ class TypeController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(type $type)
+    public function destroy(Type $type)
     {
         Type::destroy($type->id);
 

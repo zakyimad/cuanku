@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\source;
+use App\Models\Source;
 // use App\Http\Requests\StoresourceRequest;
 // use App\Http\Requests\UpdatesourceRequest;
 use Illuminate\Http\Request;
@@ -48,7 +48,7 @@ class SourceController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(source $source)
+    public function show(Source $source)
     {
         //
     }
@@ -56,7 +56,7 @@ class SourceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(source $source)
+    public function edit(Source $source)
     {
         return view('content.preferences.sources.edit',[
             'sources' => $source
@@ -66,7 +66,7 @@ class SourceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, source $source)
+    public function update(Request $request, Source $source)
     {
         $id = $request->route('id');
 
@@ -85,7 +85,7 @@ class SourceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(source $source)
+    public function destroy(Source $source)
     {
         Source::destroy($source->id);
 
