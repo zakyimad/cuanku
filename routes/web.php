@@ -154,7 +154,7 @@ Route::get('/form/layouts-horizontal', [HorizontalForm::class, 'index'])->name('
 // tables
 Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic');
 
-Route::get('/test', function () {
+Route::get('/tes', function () {
     Artisan::call('storage:link');
 });
 
