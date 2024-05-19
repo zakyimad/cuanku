@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\type;
-use App\Models\subtype;
+use App\Models\Type;
+use App\Models\Subtype;
 use App\Http\Requests\StoretypeRequest;
 use App\Http\Requests\UpdatetypeRequest;
 use Illuminate\Http\Request;
