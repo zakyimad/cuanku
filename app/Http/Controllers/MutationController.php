@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\mutation;
-use App\Models\card;
+use App\Models\Mutation;
+use App\Models\Card;
 use Illuminate\Http\Request;
 // use App\Http\Requests\StoremutationRequest;
 // use App\Http\Requests\UpdatemutationRequest;
@@ -57,7 +57,7 @@ class MutationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(mutation $mutation)
+    public function show(Mutation $mutation)
     {
         return view('content.mutations.show', [
             'mutations' => $mutation
@@ -67,7 +67,7 @@ class MutationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(mutation $mutation)
+    public function edit(Mutation $mutation)
     {
         return view('content.mutauions.edit', [
             'mutations' => $mutation,
@@ -78,7 +78,7 @@ class MutationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, mutation $mutation)
+    public function update(Request $request, Mutation $mutation)
     {
         $validatedData = $request->validate([
             'date' => 'required|date',
@@ -99,7 +99,7 @@ class MutationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(mutation $mutation)
+    public function destroy(Mutation $mutation)
     {
         Mutation::destroy($mutation->id);
 
