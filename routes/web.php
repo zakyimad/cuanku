@@ -155,7 +155,7 @@ Route::get('/form/layouts-horizontal', [HorizontalForm::class, 'index'])->name('
 Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic');
 
 Route::get('/test', function(){
-    Artisan::call(storage::link);
+    Artisan::call(storage:link);
 });
 
 require __DIR__.'/auth.php';
