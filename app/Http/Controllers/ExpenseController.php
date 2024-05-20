@@ -140,7 +140,7 @@ class ExpenseController extends Controller
      */
     public function update(Request $request, Expense $expense)
     {
-        dd($request);
+        // dd($request);
         $validatedData = $request->validate([
             'title' => 'required|max:255',
             'description' => 'max:255',
