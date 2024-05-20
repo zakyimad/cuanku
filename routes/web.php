@@ -67,9 +67,13 @@ use App\Http\Controllers\tables\Basic as TablesBasic;
 |
 */
 
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('home');
+})->middleware('guest')->name("home");
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

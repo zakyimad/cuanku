@@ -20,7 +20,7 @@ $navbarDetached = ($navbarDetached ?? '');
           <span class="app-brand-logo demo">
             @include('_partials.macros',["height"=>20])
           </span>
-          <span class="app-brand-text demo menu-text fw-semibold ms-1">{{config('variables.templateName')}}</span>
+          <span class="app-brand-text demo menu-text fw-semibold ms-1 text-primary" style="color: #3E70BE;">{{config('variables.templateName')}}</span>
         </a>
         <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
           <i class="mdi menu-toggle-icon d-xl-block align-middle mdi-20px"></i>
