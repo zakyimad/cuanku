@@ -39,7 +39,6 @@
             @enderror
           </div>
 
-
           <div class="input-group mb-4">
             <label class="input-group-text" for="type_id" name="type_id">Tipe</label>
             <select class="form-select" id="type_id" name="type_id">
@@ -56,6 +55,7 @@
           @endforeach
             </select>
           </div>
+
           <div class="input-group mb-4">
             <label class="input-group-text" for="subtype_id">Sub&nbsp;</label>
             <select class="form-select" id="subtype_id" name="subtype_id">
@@ -72,6 +72,7 @@
                 @endforeach
             </select>
           </div>
+          
           <div class="input-group mb-4">
             <label class="input-group-text" for="card_id">Src &nbsp;</label>
             <select class="form-select" id="card_id" name="card_id">

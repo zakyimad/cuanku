@@ -140,10 +140,12 @@ class ExpenseController extends Controller
      */
     public function update(Request $request, Expense $expense)
     {
+        dd($request);
         $validatedData = $request->validate([
             'title' => 'required|max:255',
             'description' => 'max:255',
             'type_id' => 'required|numeric',
+            'subtype_id' => 'required|numeric',
             'amount' => 'required|numeric',
             // 'payment_id' => 'required',
             'card_id' => 'required',
