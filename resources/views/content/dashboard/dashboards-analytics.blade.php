@@ -209,66 +209,29 @@
                         <small class="mt-1">Compared to $84,325 last year</small>
                     </div>
                     <ul class="p-0 m-0">
-
-
-
-                        <li class="d-flex mb-4 pb-md-2">
-                            <div class="avatar flex-shrink-0 me-3">
-                                <img src="{{ asset('assets/img/icons/misc/zipcar.png') }}" alt="zipcar"
-                                    class="rounded">
-                            </div>
-                            <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                <div class="me-2">
-                                    <h6 class="mb-0">Zipcar</h6>
-                                    <small>Vuejs, React & HTML</small>
+                        @foreach ( $types as $type )
+                            <li class="d-flex mb-4 pb-md-2">
+                                <div class="avatar flex-shrink-0 me-3 text-{{ $type->color }}">
+                                    <i class="mdi mdi-{{ $type->icon }} mdi-36px"></i>
+                                    {{-- <img src="{{ asset('assets/img/icons/misc/zipcar.png') }}" alt="zipcar"
+                                        class="rounded"> --}}
                                 </div>
-                                <div>
-                                    <h6 class="mb-2">$24,895.65</h6>
-                                    <div class="progress bg-label-primary" style="height: 4px;">
-                                        <div class="progress-bar bg-primary" style="width: 75%" role="progressbar"
-                                            aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
+                                    <div class="me-2">
+                                        <h6 class="mb-0">{{ $type->name }}</h6>
+                                        {{-- <small>Vuejs, React & HTML</small> --}}
+                                    </div>
+                                    <div>
+                                        {{-- {{ dd($expenses) }} --}}
+                                        <h6 class="mb-2">Rp. {{ number_format($expenses->where('type_id', $type->id)->sum('amount') , 0, '.', ',') }}</h6>
+                                        <div class="progress bg-label-primary" style="height: 4px;">
+                                            <div class="progress-bar bg-primary" style="width: 75%" role="progressbar"
+                                                aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </li>
-                        <li class="d-flex mb-4 pb-md-2">
-                            <div class="avatar flex-shrink-0 me-3">
-                                <img src="{{ asset('assets/img/icons/misc/bitbank.png') }}" alt="bitbank"
-                                    class="rounded">
-                            </div>
-                            <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                <div class="me-2">
-                                    <h6 class="mb-0">Bitbank</h6>
-                                    <small>Sketch, Figma & XD</small>
-                                </div>
-                                <div>
-                                    <h6 class="mb-2">$8,6500.20</h6>
-                                    <div class="progress bg-label-info" style="height: 4px;">
-                                        <div class="progress-bar bg-info" style="width: 75%" role="progressbar"
-                                            aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="d-flex mb-md-3">
-                            <div class="avatar flex-shrink-0 me-3">
-                                <img src="{{ asset('assets/img/icons/misc/aviato.png') }}" alt="aviato"
-                                    class="rounded">
-                            </div>
-                            <div class="d-flex w-100 flex-wrap align-items-center justify-content-between gap-2">
-                                <div class="me-2">
-                                    <h6 class="mb-0">Aviato</h6>
-                                    <small>HTML & Angular</small>
-                                </div>
-                                <div>
-                                    <h6 class="mb-2">$1,2450.80</h6>
-                                    <div class="progress bg-label-secondary" style="height: 4px;">
-                                        <div class="progress-bar bg-secondary" style="width: 75%" role="progressbar"
-                                            aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
+                            </li>
+                        @endforeach
                     </ul>
                 </div>
             </div>

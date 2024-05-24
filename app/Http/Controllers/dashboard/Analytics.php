@@ -21,6 +21,7 @@ class Analytics extends Controller
 
     return view('content.dashboard.dashboards-analytics',[
         'expenses' => Expense::where('user_id',auth()->user()->id)->get(),
+        'types' => Type::where('user_id',auth()->user()->id)->get(),
 
         // Get the start and end of the current month
         $startOfMonth = Carbon::now()->startOfMonth()->toDateString(),
