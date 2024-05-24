@@ -32,7 +32,9 @@
             // layout: {
             // topStart: 'searchPanes' },
         });
+
     </script>
+
 @endsection
 
 @section('content')
@@ -41,11 +43,15 @@
         <div class="col-md-12 col-lg-4">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title mb-1">Selamat Datang, {{auth()->user()->name}} !</h4>
-                    <p class="pb-0">Kamu belum melakukan pengisian catatan hari ini :( </p>
-                    <h4 class="text-primary mb-1">$42.8k</h4>
-                    <p class="mb-2 pb-1">78% of target 🚀</p>
-                    <a href="javascript:;" class="btn btn-sm btn-primary">View Sales</a>
+                    <h4 class="card-title mb-2">Selamat Datang, {{auth()->user()->name}} !</h4>
+                    @if ( $TodayCount == 0)
+                        <p class="pb-0">Kamu belum melakukan pengisian catatan keuangan hari ini :( </p>
+                    @else
+                        <p class="pb-0">Yeay, Kamu hari ini sudah melakukan pengisisan catatan keuangan :) </p>
+                    @endif
+                    <h4 class="text-primary mb-1">{{ $TodayCount }}</h4>
+                    <p class="mb-2 pb-1">Catatan keuangan</p>
+                    {{-- <a href="javascript:;" class="btn btn-sm btn-primary">Ayo Lihat di sini !</a> --}}
                 </div>
                 {{-- <img src="{{ asset('assets/img/icons/misc/triangle-light.png') }}"
                     class="scaleX-n1-rtl position-absolute bottom-0 end-0" width="166" alt="triangle background">
@@ -60,7 +66,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center justify-content-between">
-                        <h5 class="card-title m-0 me-2">Transactions</h5>
+                        <h5 class="card-title m-0 me-2"> Summary </h5>
                         <div class="dropdown">
                             <button class="btn p-0" type="button" id="transactionID" data-bs-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false">
@@ -73,7 +79,11 @@
                             </div>
                         </div>
                     </div>
-                    <p class="mt-3"><span class="fw-medium">Total 48.5% growth</span> 😎 this month</p>
+                    @if ( $ThisMonthExpense <= $ThisMonthIncome )
+                        <p class="mt-3"><span class="fw-medium">Pemasukanmu lebih besar dari Pengeluaranmu</span> 😎 Pertahankan !</p>
+                    @else
+                        <p class="mt-3"><span class="fw-medium">Pengeluaranmu lebih besar dari Pemasukanmu</span> lebih hemat lagi yaa !</p>
+                    @endif
                 </div>
                 <div class="card-body">
                     <div class="row g-3">
@@ -86,7 +96,7 @@
                                 </div>
                                 <div class="ms-3">
                                     <div class="small mb-1">Pemasukan</div>
-                                    <h5 class="mb-0">245k</h5>
+                                    <h5 class="mb-0">Rp. {{ number_format($ThisMonthIncome, 0, '.', ',') }}</h5>
                                 </div>
                             </div>
                         </div>
@@ -99,11 +109,11 @@
                                 </div>
                                 <div class="ms-3">
                                     <div class="small mb-1">Pengeluaran</div>
-                                    <h5 class="mb-0">12.5k</h5>
+                                    <h5 class="mb-0">Rp. {{ number_format($ThisMonthExpense, 0, '.', ',') }}</h5>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-6">
+                        {{-- <div class="col-md-3 col-6">
                             <div class="d-flex align-items-center">
                                 <div class="avatar">
                                     <div class="avatar-initial bg-warning rounded shadow">
@@ -115,7 +125,7 @@
                                     <h5 class="mb-0">1.54k</h5>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-md-3 col-6">
                             <div class="d-flex align-items-center">
                                 <div class="avatar">
@@ -125,7 +135,7 @@
                                 </div>
                                 <div class="ms-3">
                                     <div class="small mb-1">Sisa</div>
-                                    <h5 class="mb-0">$88k</h5>
+                                    <h5 class="mb-0">Rp. {{ number_format(($ThisMonthIncome-$ThisMonthExpense) , 0, '.', ',') }}</h5>
                                 </div>
                             </div>
                         </div>
@@ -174,7 +184,7 @@
         <div class="col-xl-4 col-md-6">
             <div class="card">
                 <div class="card-header d-flex align-items-center justify-content-between">
-                    <h5 class="card-title m-0 me-2">Total Earning</h5>
+                    <h5 class="card-title m-0 me-2"> Total Expenses (This Month) </h5>
                     <div class="dropdown">
                         <button class="btn p-0" type="button" id="totalEarnings" data-bs-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
@@ -199,6 +209,9 @@
                         <small class="mt-1">Compared to $84,325 last year</small>
                     </div>
                     <ul class="p-0 m-0">
+
+
+
                         <li class="d-flex mb-4 pb-md-2">
                             <div class="avatar flex-shrink-0 me-3">
                                 <img src="{{ asset('assets/img/icons/misc/zipcar.png') }}" alt="zipcar"

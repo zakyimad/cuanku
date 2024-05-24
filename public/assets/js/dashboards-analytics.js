@@ -30,7 +30,7 @@
       series: [
         {
           name: 'Sales',
-          data: [32, 55, 45, 75, 55, 35, 70]
+          data: [320, 552, 451, 752, 550, 352, 700]
         }
       ],
       colors: [chartBgColor],
@@ -84,7 +84,7 @@
       },
       yaxis: {
         min: 0,
-        max: 90,
+        max: 900,
         show: true,
         tickAmount: 3,
         labels: {

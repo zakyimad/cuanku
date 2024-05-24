@@ -108,7 +108,7 @@ class IncomeController extends Controller
     {
         return view('content.incomes.edit', [
             'incomes' => $income,
-            'sources' => Source::where('user_id',auth()->user()->id->get()),
+            'sources' => Source::where('user_id',auth()->user()->id)->get(),
             'cards' => Card::where('user_id',auth()->user()->id)->get()
         ]);
     }

@@ -5,11 +5,13 @@ namespace App\Http\Controllers\dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Expense;
+use App\Models\Income;
 use App\Models\Card;
 use App\Models\Type;
 use App\Models\Subtype;
 use App\Models\Source;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Analytics extends Controller
 {
@@ -19,6 +21,27 @@ class Analytics extends Controller
 
     return view('content.dashboard.dashboards-analytics',[
         'expenses' => Expense::where('user_id',auth()->user()->id)->get(),
+
+        // Get the start and end of the current month
+        $startOfMonth = Carbon::now()->startOfMonth()->toDateString(),
+        $endOfMonth = Carbon::now()->endOfMonth()->toDateString(),
+
+        // Retrieve the total amount for transactions within the current month
+        "ThisMonthExpense" => Expense::whereBetween('date', [$startOfMonth, $endOfMonth])
+        ->where('user_id',auth()->user()->id)
+        ->sum('amount'),
+
+        "ThisMonthIncome" => Income::whereBetween('date', [$startOfMonth, $endOfMonth])
+        ->where('user_id',auth()->user()->id)
+        ->sum('amount'),
+
+        // Get the current date
+        $currentDate = Carbon::now()->toDateString(),
+
+        // Retrieve the total amount for transactions on the current day
+        "TodayCount" => Expense::whereDate('date', $currentDate)
+        ->where('user_id',auth()->user()->id)
+        ->count('id'),
 
         // Menggabungkan data pengeluaran dan pemasukan
         'alltransactions' => DB::table('expenses')
