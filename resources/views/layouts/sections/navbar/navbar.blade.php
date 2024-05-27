@@ -60,7 +60,7 @@ $navbarDetached = ($navbarDetached ?? '');
                 <div class="avatar avatar-online">
                     <img src="
                     @if (auth()->user()->photos)
-                        {{ asset('storage/' . auth()->user()->photos) }}
+                        {{ asset('profile-photos/' . auth()->user()->photos) }}
                     @else
                         {{ asset('assets/img/avatars/1.png') }}
                     @endif
@@ -76,7 +76,7 @@ $navbarDetached = ($navbarDetached ?? '');
                       <div class="avatar avatar-online">
                         <img src="
                         @if (auth()->user()->photos)
-                            {{ asset('storage/' . auth()->user()->photos) }}
+                            {{ asset('profile-photos/' . auth()->user()->photos) }}
                         @else
                             {{ asset('assets/img/avatars/1.png') }}
                         @endif

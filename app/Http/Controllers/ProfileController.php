@@ -28,6 +28,8 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        // dd($request);
+
         $id = $request->route('id');
 
         $validatedData = $request->validate([
@@ -41,11 +43,19 @@ class ProfileController extends Controller
         ]);
 
         if($request->file('photos')) {
+            $file = $request->file('photos');
+            $filename = $filename = \Carbon\Carbon::now()->format('Y-m-d H-i').'_'. Auth::user()->id .''. Auth::user()->name . '.' . $file->getClientOriginalExtension();
+            // $filename = \Carbon\Carbon::now()->format('Y-m-d H-i').''.$file->getClientOriginalName();
+
             if($request->oldImage){
-                Storage::delete($request->oldImage);
+                // Storage::delete($request->oldImage);
+                $filePath = 'profile-photos/' . $filename; // Replace $fileName with the actual file name
+                Storage::delete($filePath);
             }
-            $validatedData['photos'] = $request->file('photos')->store('profile-photos');
+            $file->move('profile-photos', $filename);
+            $validatedData['photos'] = $filename;
         }
+
 
         User::where('id', auth()->user()->id)->update($validatedData);
 

@@ -26,7 +26,7 @@
         @endif
     <ul class="nav nav-pills flex-column flex-md-row mb-4 gap-2 gap-lg-0">
       <li class="nav-item"><a class="nav-link active" href="javascript:void(0);"><i class="mdi mdi-account-outline mdi-20px me-1"></i>Account</a></li>
-      <li class="nav-item"><a class="nav-link" href="{{url('preferences')}}"><i class="mdi mdi-tune mdi-20px me-1"></i>Preferences</a></li>
+      <li class="nav-item"><a class="nav-link" href="{{url('preferences')}}"><i class="mdi mdi-tune mdi-20px me-1"></i>User Management (Admin) </a></li>
       {{-- <li class="nav-item"><a class="nav-link" href="{{url('pages/account-settings-connections')}}"><i class="mdi mdi-link mdi-20px me-1"></i>Connections</a></li> --}}
     </ul>
     <div class="card mb-4">
@@ -40,7 +40,7 @@
             <div class="d-flex align-items-start align-items-sm-center gap-4">
             <img src="
                 @if (auth()->user()->photos)
-                    {{ asset('storage/' . auth()->user()->photos) }}
+                    {{ asset('profile-photos/'.auth()->user()->photos) }}
                 @else
                     {{ asset('assets/img/avatars/1.png') }}
                 @endif
