@@ -15,7 +15,7 @@
     },
     {
       "name": "Transaction",
-      "icon": "menu-icon tf-icons mdi mdi-window-maximize",
+      "icon": "menu-icon tf-icons mdi mdi-invoice-list-outline",
       "slug": ["expenses","incomes"],
       "submenu": [
         {
@@ -69,7 +69,7 @@
     },
     {
       "name": "Preferences",
-      "icon": "menu-icon tf-icons mdi mdi-account-outline",
+      "icon": "menu-icon tf-icons mdi mdi-cog-outline",
       "slug": ["types","subtypes","source"],
       "submenu": [
         {

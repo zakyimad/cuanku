@@ -1,6 +1,6 @@
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'dashboard')
+@section('title', 'Dashboard')
 
 @section('vendor-style')
     <link rel="stylesheet" href="{{ asset('assets/vendor/libs/apex-charts/apex-charts.css') }}">
@@ -87,7 +87,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row g-3">
-                        <div class="col-md-3 col-6">
+                        <div class="col-md-4">
                             <div class="d-flex align-items-center">
                                 <div class="avatar">
                                     <div class="avatar-initial bg-primary rounded shadow">
@@ -96,11 +96,11 @@
                                 </div>
                                 <div class="ms-3">
                                     <div class="small mb-1">Pemasukan</div>
-                                    <h5 class="mb-0">Rp. {{ number_format($ThisMonthIncome, 0, '.', ',') }}</h5>
+                                    <h5 class="mb-0" style="white-space: nowrap">Rp. {{ number_format($ThisMonthIncome, 0, '.', ',') }}</h5>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-6">
+                        <div class="col-md-4">
                             <div class="d-flex align-items-center">
                                 <div class="avatar">
                                     <div class="avatar-initial bg-success rounded shadow">
@@ -109,24 +109,11 @@
                                 </div>
                                 <div class="ms-3">
                                     <div class="small mb-1">Pengeluaran</div>
-                                    <h5 class="mb-0">Rp. {{ number_format($ThisMonthExpense, 0, '.', ',') }}</h5>
+                                    <h5 class="mb-0" style="white-space: nowrap">Rp. {{ number_format($ThisMonthExpense, 0, '.', ',') }}</h5>
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="col-md-3 col-6">
-                            <div class="d-flex align-items-center">
-                                <div class="avatar">
-                                    <div class="avatar-initial bg-warning rounded shadow">
-                                        <i class="mdi mdi-cellphone-link mdi-24px"></i>
-                                    </div>
-                                </div>
-                                <div class="ms-3">
-                                    <div class="small mb-1">Tabungan</div>
-                                    <h5 class="mb-0">1.54k</h5>
-                                </div>
-                            </div>
-                        </div> --}}
-                        <div class="col-md-3 col-6">
+                        <div class="col-md-4">
                             <div class="d-flex align-items-center">
                                 <div class="avatar">
                                     <div class="avatar-initial bg-info rounded shadow">
@@ -135,7 +122,7 @@
                                 </div>
                                 <div class="ms-3">
                                     <div class="small mb-1">Sisa</div>
-                                    <h5 class="mb-0">Rp. {{ number_format(($ThisMonthIncome-$ThisMonthExpense) , 0, '.', ',') }}</h5>
+                                    <h5 class="mb-0" style="white-space: nowrap">Rp. {{ number_format(($ThisMonthIncome-$ThisMonthExpense) , 0, '.', ',') }}</h5>
                                 </div>
                             </div>
                         </div>
@@ -223,10 +210,10 @@
                                     </div>
                                     <div>
                                         {{-- {{ dd($expenses) }} --}}
-                                        <h6 class="mb-2">Rp. {{ number_format($expenses->where('type_id', $type->id)->sum('amount') , 0, '.', ',') }}</h6>
+                                        <h6 class="mb-2">Rp. {{ number_format($expenses->where('type_id', $type->id)->sum('amount') , 0, '.', ',') }} </h6>
                                         <div class="progress bg-label-primary" style="height: 4px;">
-                                            <div class="progress-bar bg-primary" style="width: 75%" role="progressbar"
-                                                aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar bg-primary" style="width: {{ round($expenses->where('type_id', $type->id)->sum('amount')/$expenses->sum('amount')*100) }}%" role="progressbar"
+                                                aria-valuenow="{{ round($expenses->where('type_id', $type->id)->sum('amount')/$expenses->sum('amount')*100) }}" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -354,7 +341,7 @@
                             @foreach ( $alltransactions as $transaction )
                             <tr>
                                 {{-- <th class="text-center" scope="row"></th> --}}
-                                <td>
+                                <td data-sort='YYYYMMDD'>
                                     <div class="d-flex align-items-center">
                                         {{ \Carbon\Carbon::parse($transaction->date)->format('m/d/Y') }}
                                     </div>

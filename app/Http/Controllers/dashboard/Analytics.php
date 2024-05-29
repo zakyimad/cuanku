@@ -58,6 +58,7 @@ class Analytics extends Controller
             ->where('incomes.user_id', auth()->user()->id)
         )
         ->orderBy('date', 'desc')
+        ->orderBy('created_at','desc')
         ->get()
     ]);
   }

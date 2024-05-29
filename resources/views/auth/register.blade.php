@@ -1,6 +1,6 @@
 @extends('layouts/blankLayout')
 
-@section('title', 'Register Pages')
+@section('title', 'Register')
 
 @section('page-style')
 <!-- Page -->
@@ -30,28 +30,36 @@
           <form id="formAuthentication" class="mb-3" action="{{route('register')}}" method="POST">
             @csrf
             <div class="form-floating form-floating-outline mb-3">
-              <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" autofocus>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" autofocus value="{{old('name')}}" >
               <label for="name">Nama</label>
             </div>
             <div class="form-floating form-floating-outline mb-3">
-              <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" autofocus>
+              <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" autofocus value="{{old('username')}}">
               <label for="username">Username</label>
             </div>
             <div class="form-floating form-floating-outline mb-3">
-              <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email">
+              <input type="text" class="form-control" id="email" name="email" placeholder="Enter your email" value="{{old('email')}}">
               <label for="email">Email</label>
             </div>
             <div class="mb-3 form-password-toggle">
               <div class="input-group input-group-merge">
                 <div class="form-floating form-floating-outline">
-                  <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" />
+                  <input type="password" id="password" class="form-control" name="password" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" autocomplete="new-password" />
                   <label for="password">Password</label>
                 </div>
                 <span class="input-group-text cursor-pointer"><i class="mdi mdi-eye-off-outline"></i></span>
               </div>
             </div>
-
-            <div class="mb-3">
+            <div class="mb-3 form-password-toggle">
+              <div class="input-group input-group-merge">
+                <div class="form-floating form-floating-outline">
+                  <input type="password" id="password_confirmation" class="form-control" name="password_confirmation" placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;" aria-describedby="password" autocomplete="new-password" />
+                  <label for="password_confirmation">Confirm Password</label>
+                </div>
+                <span class="input-group-text cursor-pointer"><i class="mdi mdi-eye-off-outline"></i></span>
+              </div>
+            </div>
+            {{-- <div class="mb-3">
               <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms">
                 <label class="form-check-label" for="terms-conditions">
@@ -59,7 +67,7 @@
                   <a href="javascript:void(0);">privacy policy & terms</a>
                 </label>
               </div>
-            </div>
+            </div> --}}
             <button class="btn btn-primary d-grid w-100">
               Sign up
             </button>
