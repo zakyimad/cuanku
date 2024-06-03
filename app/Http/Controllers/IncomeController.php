@@ -87,6 +87,10 @@ class IncomeController extends Controller
 
         Income::create($validatedData);
 
+        // Change Amount in Cards
+        $dummy= Card::where('user_id',auth()->user()->id)->where('id',$validatedData['card_id'])->pluck('amount')->first() + $validatedData['amount'];
+        Card::where('user_id',auth()->user()->id)->where('id',$validatedData['card_id'])->update(['amount' => $dummy]);
+
         return redirect('/incomes')->with('success','Data baru telah ditambahkan!');
 
     }
@@ -139,6 +143,22 @@ class IncomeController extends Controller
         }
 
         Income::where('id', $income->id)->update($validatedData);
+
+        // Change Amount in Cards
+
+        if($income->card_id <> $validatedData['card_id']){
+            $dummy1 = Card::where('user_id',auth()->user()->id)->where('id',$income['card_id'])->pluck('amount')->first() - $validatedData['amount'];
+            Card::where('user_id',auth()->user()->id)->where('id',$income['card_id'])->update(['amount' => $dummy1]);
+
+            $dummy2 = Card::where('user_id',auth()->user()->id)->where('id',$validatedData['card_id'])->pluck('amount')->first() + $validatedData['amount'];
+            Card::where('user_id',auth()->user()->id)->where('id',$validatedData['card_id'])->update(['amount' => $dummy2]);
+        }
+
+        if($income->amount <> $validatedData['amount']){
+            $dummy1 = $income->amount - $validatedData['amount'];
+            $dummy2 = Card::where('user_id',auth()->user()->id)->where('id',$validatedData['card_id'])->pluck('amount')->first() - $dummy1;
+            Card::where('user_id',auth()->user()->id)->where('id',$income['card_id'])->update(['amount' => $dummy2]);
+        }
 
         return redirect('/incomes')->with('warning','Data telah diubah!');
     }

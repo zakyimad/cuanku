@@ -11,11 +11,11 @@
   <div class="col-md-6">
     <div class="card mb-4">
       <div class="card-header d-flex align-items-center">
-        <div class="col-sm-6 text-left">
-            <h5 class="mb-0">Detail Transaksi</h5>
+        {{-- <div class="col-sm-6 text-left"> --}}
+            {{-- <h5 class="mb-0">Transaksi Pengeluaran</h5> --}}
             {{-- <small class="text-muted float-end">Pengeluaran</small> --}}
-        </div>
-        <div class="col-sm-6 d-flex items-align-center justify-content-end">
+        {{-- </div> --}}
+        <div class="col d-flex items-align-center justify-content-end">
             <div class="avatar mx-1">
                 <a href="/expenses/{{ $expenses->id }}/edit" class="avatar-initial bg-warning rounded shadow">
                 <i class="mdi mdi-pencil mdi-10px"></i>
@@ -35,89 +35,77 @@
         </div>
       </div>
       <div class="card-body">
-        <div class="card">
-            {{-- <h5 class="card-header">{{ $expenses -> title }}</h5> --}}
+        <div class="row border-bottom mx-1">
+            <div class="col-6">
+                <h5 class="text-left"> {{ $expenses -> title }}</h5>
+            </div>
+            <div class="col-6 float-end">
+                <p class="card-text mb-1">{{ \Carbon\Carbon::parse($expenses->date)->format('l, d/m/Y') }}</p>
+            </div>
+        </div>
+        <div class="row mt-4 mx-1">
+            <div class="col-6">
+                <p class="m-0">
+                    Nilai
+                </p>
+                <h2 class="card-text mt-2">Rp. {{ number_format($expenses->amount, 0, '.', ',')}}</h2>
+            </div>
+            <div class="col-6 float-end text-end">
+                <p class="m-0">
+                    Payment Method
+                </p>
+                <h2 class="card-text">
+                    <i class="mdi mdi-{{ $expenses->card->icon }} mdi-36px" style="color: {{ $expenses->card->color}}"></i> {{ $expenses->card->name }}
+                </h2>
+            </div>
+        </div>
+
+        <div class="card mt-4">
             <div class="card-body">
-                <h3 class="text-center"> {{ $expenses -> title }}</h3>
-                {{-- <p> {{ $expenses -> date }}</p> --}}
                 <div class="row">
-                    <div class="col-sm-6 mb-4 mt-3 d-flex align-items-center">
-                        <div class="mx-2 mt-3">
-                            <i class="mdi mdi-cash-multiple mdi-36px"></i>
-                        </div>
-                        <div class="text-left mx-2">
-                            <h7 class="card-title">Nilai</h7>
-                            <h2 class="card-text">Rp. {{ number_format($expenses->amount, 0, '.', ',')}}</h2>
+                    <div class="col-6">
+                        <p class="m-0">
+                            Kategori
+                        </p>
+                        <div class="mt-2">
+                            <span class="badge bg-label-{{ $expenses->type->color }}"><i class="mdi mdi-{{ $expenses->type->icon }} mdi-10px"></i> {{ $expenses->type->name }}</span>
                         </div>
                     </div>
-                    <div class="col-sm-6 mb-4 mt-3">
-                        <div class="text-left items-align-center">
-                            <h6 class="card-title">Tanggal Transaksi</h6>
-                            <p class="card-text mb-1">{{ \Carbon\Carbon::parse($expenses->date)->format('l, d/m/Y') }}</p>
+                    <div class="col-6">
+                        <p class="m-0">
+                            Sub-Kategori
+                        </p>
+                        <div class="mt-2">
+                            <i class="mdi mdi-{{ $expenses->subtype->icon }} mdi-10px"></i> {{ $expenses->subtype->name }}
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-sm-6 mb-4">
-                        <div class="d-flex align-items-center">
-                            <div class="mx-2 mt-3">
-                                <i class="mdi mdi-list-box mdi-36px"></i>
-                            </div>
-                            <div class="mt-3 mx-2">
-                                <h5>Tipe</h5>
-                                <span class="badge bg-primary">{{ $expenses->type->name }}</span>
-                                {{-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> --}}
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 mb-4">
-                        <div class="card text-left bg-warning text-white" style="opacity: 0.7;">
-                            <div class="card-body d-flex align-items-center">
-                                <div>
-                                    <i class="mdi mdi-cart-variant mdi-36px"></i>
-                                </div>
-                                <div class="mx-3">
-                                    <h7 class="card-title text-white">Kategori</h7>
-                                    <h5 class="card-text text-white mt-2">{{ $expenses->subtype->name }}</h5>
-                                </div>
-                                {{-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> --}}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 mb-4">
-                        <div class="card-body bg-success text-white d-flex items-align-center justify-content-center text-center" style="opacity: 0.7;">
-                                <i class="mdi mdi-credit-card-fast-outline mdi-36px"></i>
-                                <div class="mx-4">
-                                    <h7 class="card-title text-white mb-2">Sumber Pembayaran</h7>
-                                    <h5 class="card-text text-white">{{ $expenses->card->name }}</h5>
-                                </div>
-                            {{-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> --}}
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 mb-4">
-                        <i class="mdi mdi-note-outline mdi-8px"></i>
+
+                <div class="row border-top mt-3">
+                    <div class="col p-3">
+                        <i class="mdi mdi-note-outline mdi-10px"></i>
                         <h7 class="mb-2">Catatan</h7>
-                        <div class="card text-left mt-2">
-                            <div class="card-body">
-                            <p class="card-text">
-                                @if ($expenses->description == "")
-                                    Tidak ada catatan
-                                @else
-                                    {{ $expenses->description }}
-                                @endif
-                            </p>
-                            {{-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> --}}
-                            </div>
-                            <img src="{{ asset('storage/' . $expenses->image) }}" alt="Image">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="card text-left mt-2">
+                        <div class="card-body">
+                        <p class="card-text">
+                            @if ($expenses->description == "")
+                                Tidak ada catatan
+                            @else
+                                {{ $expenses->description }}
+                            @endif
+                        </p>
+                        {{-- <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> --}}
                         </div>
                     </div>
+                </div>
+                <div class="row mt-4">
+                    <img src="{{ asset('storage/' . $expenses->image) }}" alt="Image">
                 </div>
             </div>
-          </div>
+        </div>
       </div>
     </div>
   </div>

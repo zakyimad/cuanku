@@ -51,6 +51,14 @@ class MutationController extends Controller
 
         Mutation::create($validatedData);
 
+        // Change Amount in Cards
+
+        $dummy1= Card::where('user_id',auth()->user()->id)->where('id',$validatedData['from_id'])->pluck('amount')->first() - $validatedData['amount'];
+        $dummy2= Card::where('user_id',auth()->user()->id)->where('id',$validatedData['to_id'])->pluck('amount')->first() + $validatedData['amount'];
+
+        Card::where('user_id',auth()->user()->id)->where('id',$validatedData['from_id'])->update(['amount' => $dummy1]);
+        Card::where('user_id',auth()->user()->id)->where('id',$validatedData['to_id'])->update(['amount' => $dummy2]);
+
         return redirect('/mutations')->with('success','Data baru telah ditambahkan!');
     }
 
@@ -69,7 +77,7 @@ class MutationController extends Controller
      */
     public function edit(Mutation $mutation)
     {
-        return view('content.mutauions.edit', [
+        return view('content.mutations.edit', [
             'mutations' => $mutation,
             'cards' => Card::where('user_id',auth()->user()->id)->get()
         ]);

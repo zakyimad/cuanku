@@ -3,7 +3,7 @@
 
 @extends('layouts/contentNavbarLayout')
 
-@section('title', 'Incomes')
+@section('title', 'Mutation')
 
 @section('content')
 <h4 class="py-3 mb-4"><span class="text-muted fw-light">Pemasukan/</span> Update Pemasukan</h4>

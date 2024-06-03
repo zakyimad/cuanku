@@ -41,7 +41,7 @@
     <div class="row gy-4">
         <!-- Congratulations card -->
         <div class="col-md-12 col-lg-4">
-            <div class="card">
+            <div class="card" style="height: 100%; display: flex; flex-direction: column; flex:1;">
                 <div class="card-body">
                     <h4 class="card-title mb-2">Selamat Datang, {{auth()->user()->name}} !</h4>
                     @if ( $TodayCount == 0)
@@ -63,7 +63,7 @@
 
         <!-- Transactions -->
         <div class="col-lg-8">
-            <div class="card">
+            <div class="card" style="height: 100%; display: flex; flex-direction: column; flex:1;">
                 <div class="card-header">
                     <div class="d-flex align-items-center justify-content-between">
                         <h5 class="card-title m-0 me-2"> Summary </h5>
@@ -134,7 +134,7 @@
 
         <!-- Weekly Overview Chart -->
         <div class="col-xl-4 col-md-6">
-            <div class="card">
+            <div class="card" style="height: 100%; display: flex; flex-direction: column; flex:1;">
                 <div class="card-header">
                     <div class="d-flex justify-content-between">
                         <h5 class="mb-1">Weekly Overview</h5>
@@ -169,7 +169,7 @@
 
         <!-- Total Earnings -->
         <div class="col-xl-4 col-md-6">
-            <div class="card">
+            <div class="card" style="height: 100%; display: flex; flex-direction: column; flex:1;">
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <h5 class="card-title m-0 me-2"> Total Expenses (This Month) </h5>
                     <div class="dropdown">
@@ -226,8 +226,8 @@
         <!--/ Total Earnings -->
 
         <!-- Four Cards -->
-        <div class="col-xl-4 col-md-6">
-            <div class="row gy-4">
+        <div class="col-xl-4 col-md-6" >
+            <div class="row gy-4" >
                 <!-- Total Profit line chart -->
                 <div class="col-sm-6">
                     <div class="card h-100">

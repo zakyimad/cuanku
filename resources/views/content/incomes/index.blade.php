@@ -58,7 +58,7 @@
         @endif
         <!-- Congratulations card -->
         <div class="col-md-12 col-lg-4">
-            <div class="card">
+            <div class="card" style="height: 100%; display: flex; flex-direction: column; flex:1;">
                 <div class="card-body">
                     <h4 class="card-title mb-1">Catatan Pemasukan</h4>
                     <p class="pb-0">Catat semua Pemasukanmu ! </p>
