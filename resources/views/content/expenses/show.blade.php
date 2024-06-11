@@ -39,7 +39,7 @@
             <div class="col-6">
                 <h5 class="text-left"> {{ $expenses -> title }}</h5>
             </div>
-            <div class="col-6 float-end">
+            <div class="col-6 float-end text-end">
                 <p class="card-text mb-1">{{ \Carbon\Carbon::parse($expenses->date)->format('l, d/m/Y') }}</p>
             </div>
         </div>
@@ -60,7 +60,7 @@
             </div>
         </div>
 
-        <div class="card mt-4">
+        <div class="card mt-5">
             <div class="card-body">
                 <div class="row">
                     <div class="col-6">
@@ -88,7 +88,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="card text-left mt-2">
+                    <div class="card text-left mt-2 bg-light">
                         <div class="card-body">
                         <p class="card-text">
                             @if ($expenses->description == "")
@@ -102,7 +102,7 @@
                     </div>
                 </div>
                 <div class="row mt-4">
-                    <img src="{{ asset('storage/' . $expenses->image) }}" alt="Image">
+                    <img src="{{ asset('storage/' . $expenses->image) }}" class="img-fluid" alt="Responsive image">
                 </div>
             </div>
         </div>
