@@ -29,8 +29,8 @@
       },
       series: [
         {
-          name: 'Sales',
-          data: [320, 552, 451, 752, 550, 352, 700]
+          name: 'Expense',
+          data: []
         }
       ],
       colors: [chartBgColor],
@@ -175,10 +175,38 @@
         }
       ]
     };
-  if (typeof weeklyOverviewChartEl !== undefined && weeklyOverviewChartEl !== null) {
-    const weeklyOverviewChart = new ApexCharts(weeklyOverviewChartEl, weeklyOverviewChartConfig);
-    weeklyOverviewChart.render();
-  }
+
+    const fetchSalesData = async () => {
+        try {
+            const response = await fetch('/api/data');
+            const expenseData = await response.json();
+
+            // Divide all data values by 1000
+            const normalizedData = expenseData.map(value => value / 1000);
+
+            // Get the maximum value from the normalized data
+            const maxExpense = Math.max(...normalizedData);
+            console.log('Maximum Expense:', maxExpense);
+
+            // Update the chart config
+            weeklyOverviewChartConfig.series[0].data = normalizedData;
+
+            // Dynamically set the max y-axis value
+            weeklyOverviewChartConfig.yaxis.max = Math.ceil(maxExpense);
+
+            // Render the chart
+            if (weeklyOverviewChartEl !== undefined && weeklyOverviewChartEl !== null) {
+                const weeklyOverviewChart = new ApexCharts(weeklyOverviewChartEl, weeklyOverviewChartConfig);
+                weeklyOverviewChart.render();
+            }
+        } catch (error) {
+            console.error('Error fetching expense data:', error);
+        }
+    };
+
+
+    // Fetch the data and initialize the chart
+    fetchSalesData();
 
   // Total Profit line chart
   // --------------------------------------------------------------------

@@ -148,4 +148,50 @@ class Analytics extends Controller
             ]);
         }
     }
+
+    public function monthlyreport()
+    {
+        return view('content.dashboard.monthly-report',[
+            'expenses' => Expense::where('user_id',auth()->user()->id)->get(),
+            'types' => Type::where('user_id',auth()->user()->id)->get(),
+            'months' => Expense::select(DB::raw('DISTINCT MONTHNAME(date) as month'))->get(),
+
+            // Get the start and end of the current month
+            $startOfMonth = Carbon::now()->startOfMonth()->toDateString(),
+            $endOfMonth = Carbon::now()->endOfMonth()->toDateString(),
+
+            // Retrieve the total amount for transactions within the current month
+            "ThisMonthExpense" => Expense::whereBetween('date', [$startOfMonth, $endOfMonth])
+            ->where('user_id',auth()->user()->id)
+            ->sum('amount'),
+
+            "ThisMonthIncome" => Income::whereBetween('date', [$startOfMonth, $endOfMonth])
+            ->where('user_id',auth()->user()->id)
+            ->sum('amount'),
+
+            // Get the current date
+            $currentDate = Carbon::now()->toDateString(),
+
+            // Retrieve the total amount for transactions on the current day
+            "TodayCount" => Expense::whereDate('date', $currentDate)
+            ->where('user_id',auth()->user()->id)
+            ->count('id'),
+            // Menggabungkan data pengeluaran dan pemasukan
+            'alltransactions' => DB::table('expenses')
+            ->select('date','title','expenses.amount','description','expenses.created_at','card_id','cards.name','cards.color', 'cards.icon','expenses.user_id', DB::raw("'Pengeluaran' as type"),DB::raw("'warning' as color_type"))
+            ->join('users', 'expenses.user_id', '=', 'users.id')
+            ->join('cards', 'expenses.card_id', '=', 'cards.id')
+            ->where('expenses.user_id', auth()->user()->id)
+            ->union(
+                DB::table('incomes')
+                ->select('date','title','incomes.amount','description','incomes.created_at','card_id','cards.name','cards.color', 'cards.icon','incomes.user_id', DB::raw("'Pemasukan' as type"),DB::raw("'success' as color_type"))
+                ->join('users', 'incomes.user_id', '=', 'users.id')
+                ->join('cards', 'incomes.card_id', '=', 'cards.id')
+                ->where('incomes.user_id', auth()->user()->id)
+            )
+            ->orderBy('date', 'desc')
+            ->orderBy('created_at','desc')
+            ->get()
+        ]);
+    }
 }

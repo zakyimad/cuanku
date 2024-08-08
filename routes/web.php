@@ -83,6 +83,7 @@ Route::middleware('auth')->group(function () {
 
 // Main Page Route
 Route::get('/dashboard', [Analytics::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard-analytics');
+Route::get('/monthlyreport', [Analytics::class, 'monthlyreport'])->middleware(['auth', 'verified'])->name('monthly-reports');
 
 Route::resource('/expenses', ExpenseController::class)->middleware('auth');
 Route::resource('/incomes', IncomeController::class)->middleware('auth');

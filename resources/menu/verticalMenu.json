@@ -10,6 +10,11 @@
           "url": "/dashboard",
           "name": "Analytics",
           "slug": "dashboard-analytics"
+        },
+        {
+          "url": "/monthlyreport",
+          "name": "Monthly Reports",
+          "slug": "monthly-reports"
         }
       ]
     },
