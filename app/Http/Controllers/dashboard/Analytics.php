@@ -27,20 +27,67 @@ class Analytics extends Controller
         $startOfMonth = Carbon::now()->startOfMonth()->toDateString(),
         $endOfMonth = Carbon::now()->endOfMonth()->toDateString(),
 
+        // Get the start and end of the current week
+        $startOfCurrentWeek = Carbon::now()->startOfWeek()->toDateString(),
+        $endOfCurrentWeek = Carbon::now()->endOfWeek()->toDateString(),
+
+        // Get the start and end of the last week
+        $startOfLastWeek = Carbon::now()->subWeek()->startOfWeek()->toDateString(),
+        $endOfLastWeek = Carbon::now()->subWeek()->endOfWeek()->toDateString(),
+
+        // Get the start and end of the last month
+        $startOfLastMonth = Carbon::now()->subMonth()->startOfMonth()->toDateString(),
+        $endOfLastMonth = Carbon::now()->subMonth()->endOfMonth()->toDateString(),
+
         // Retrieve the total amount for transactions within the current month
-        "ThisMonthExpense" => Expense::whereBetween('date', [$startOfMonth, $endOfMonth])
+        $ThisMonthExpense = Expense::whereBetween('date', [$startOfMonth, $endOfMonth])
         ->where('user_id',auth()->user()->id)
         ->sum('amount'),
 
-        "ThisMonthIncome" => Income::whereBetween('date', [$startOfMonth, $endOfMonth])
+        $ThisMonthIncome = Income::whereBetween('date', [$startOfMonth, $endOfMonth])
         ->where('user_id',auth()->user()->id)
         ->sum('amount'),
+
+        // Retrieve the total amount for expenses within the current week
+        $ThisWeekExpense = Expense::whereBetween('date', [$startOfCurrentWeek, $endOfCurrentWeek])
+        ->where('user_id', auth()->user()->id)
+        ->sum('amount'),
+
+        // Retrieve the total amount for expenses within the last week
+        $LastWeekExpense = Expense::whereBetween('date', [$startOfLastWeek, $endOfLastWeek])
+        ->where('user_id', auth()->user()->id)
+        ->sum('amount'),
+
+        // Retrieve the total amount for expenses within the last month
+        $lastMonthExpense = Expense::whereBetween('date', [$startOfLastMonth, $endOfLastMonth])
+        ->where('user_id', auth()->user()->id)
+        ->sum('amount'),
+
+        // Retrieve the total amount for expenses within the last month
+        $lastMonthIncome = Income::whereBetween('date', [$startOfLastMonth, $endOfLastMonth])
+        ->where('user_id', auth()->user()->id)
+        ->sum('amount'),
+
+        "expenseGrowth" => $LastWeekExpense == 0 ? 100 : (($ThisWeekExpense - $LastWeekExpense) / $LastWeekExpense) * 100,
+        "expenseMonthGrowth" => $lastMonthExpense == 0 ? 100 : (($ThisMonthExpense - $lastMonthExpense) / $lastMonthExpense) * 100,
+        "incomeMonthGrowth" => $lastMonthIncome == 0 ? 100 : (($ThisMonthIncome - $lastMonthIncome) / $lastMonthIncome) * 100,
+        "netWeekExpense" => $ThisWeekExpense - $LastWeekExpense,
+        "netMonthExpense" => $ThisMonthExpense - $lastMonthExpense,
+        "netMonthIncome" => $ThisMonthIncome - $lastMonthIncome,
+        "ThisMonthExpense" => $ThisMonthExpense,
+        "lastMonthExpense" => $lastMonthExpense,
+        "ThisMonthIncome" => $ThisMonthIncome,
+        "lastMonthIncome" => $lastMonthIncome,
 
         // Get the current date
         $currentDate = Carbon::now()->toDateString(),
 
         // Retrieve the total amount for transactions on the current day
         "TodayCount" => Expense::whereDate('date', $currentDate)
+        ->where('user_id',auth()->user()->id)
+        ->count('id'),
+
+        "MonthCount" => Expense::whereBetween('date', [$startOfMonth, $endOfMonth])
         ->where('user_id',auth()->user()->id)
         ->count('id'),
 

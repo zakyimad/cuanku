@@ -143,11 +143,11 @@
                                 aria-haspopup="true" aria-expanded="false">
                                 <i class="mdi mdi-dots-vertical mdi-24px"></i>
                             </button>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="weeklyOverviewDropdown">
-                                <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Share</a>
-                                <a class="dropdown-item" href="javascript:void(0);">Update</a>
-                            </div>
+                            {{-- <div class="dropdown-menu dropdown-menu-end" aria-labelledby="weeklyOverviewDropdown"> --}}
+                                {{-- <a class="dropdown-item" href="javascript:void(0);">Refresh</a> --}}
+                                {{-- <a class="dropdown-item" href="javascript:void(0);">Share</a> --}}
+                                {{-- <a class="dropdown-item" href="javascript:void(0);">Update</a> --}}
+                            {{-- </div> --}}
                         </div>
                     </div>
                 </div>
@@ -155,12 +155,20 @@
                     <div id="weeklyOverviewChart"></div>
                     <div class="mt-1 mt-md-3">
                         <div class="d-flex align-items-center gap-3">
-                            <h3 class="mb-0">45%</h3>
-                            <p class="mb-0">Your sales performance is 45% 😎 better compared to last month</p>
+                            <h3 class="mb-0">{{ round($expenseGrowth,2) }}%</h3>
+                            <p class="mb-0">Pengeluaranmu minggu ini {{ round($expenseGrowth,2) }}%
+                            @if (($netWeekExpense) >= 0)
+                                <span> lebih besar Rp. {{ number_format(($netWeekExpense), 0, '.', ',') }} dibanding minggu sebelumnya</span>
+                            @else
+                                <span> lebih sedikit Rp. {{ number_format((abs($netWeekExpense)), 0, '.', ',') }} dibanding minggu sebelumnya</span>
+                            @endif
+                            </p>
                         </div>
-                        <div class="d-grid mt-3 mt-md-4">
-                            <button class="btn btn-primary" type="button">Details</button>
-                        </div>
+                        <a href={{url("/expenses")}}>
+                            <div class="d-grid mt-3 mt-md-4">
+                                <button class="btn btn-primary" type="button">Details</button>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -187,13 +195,20 @@
                 <div class="card-body">
                     <div class="mb-3 mt-md-3 mb-md-5">
                         <div class="d-flex align-items-center">
-                            <h2 class="mb-0">$24,895</h2>
-                            <span class="text-success ms-2 fw-medium">
-                                <i class="mdi mdi-menu-up mdi-24px"></i>
-                                <small>10%</small>
-                            </span>
+                            <h2 class="mb-0">Rp. {{ number_format(($ThisMonthExpense), 0, '.', ',') }}</h2>
+                            @if ($expenseMonthGrowth > 0)
+                                <span class="text-success ms-2 fw-medium">
+                                    <i class="mdi mdi-menu-up mdi-24px"></i>
+                                    <small>{{ abs(round($expenseMonthGrowth,2)) }}%</small>
+                                </span>
+                            @else
+                                <span class="text-danger ms-2 fw-medium">
+                                    <i class="mdi mdi-menu-down mdi-24px"></i>
+                                    <small>{{ abs(round($expenseMonthGrowth,2)) }}%</small>
+                                </span>
+                            @endif
                         </div>
-                        <small class="mt-1">Compared to $84,325 last year</small>
+                        <small class="mt-1">Compared to Rp. {{ number_format(($lastMonthExpense), 0, '.', ',') }} last month</small>
                     </div>
                     <ul class="p-0 m-0">
                         @foreach ( $types as $type )
@@ -232,11 +247,11 @@
                 <div class="col-sm-6">
                     <div class="card h-100">
                         <div class="card-header pb-0">
-                            <h4 class="mb-0">$86.4k</h4>
+                            <h4 class="mb-0">Rp. {{ number_format(($ThisMonthIncome), 0, '.', ',') }}</h4>
                         </div>
                         <div class="card-body">
                             <div id="totalProfitLineChart" class="mb-3"></div>
-                            <h6 class="text-center mb-0">Total Profit</h6>
+                            <h6 class="text-center mb-0">Total Income</h6>
                         </div>
                     </div>
                 </div>
@@ -250,7 +265,7 @@
                                     <i class="mdi mdi-poll mdi-24px"></i>
                                 </div>
                             </div>
-                            <div class="dropdown">
+                            {{-- <div class="dropdown">
                                 <button class="btn p-0" type="button" id="totalProfitID" data-bs-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                     <i class="mdi mdi-dots-vertical mdi-24px"></i>
@@ -260,13 +275,18 @@
                                     <a class="dropdown-item" href="javascript:void(0);">Share</a>
                                     <a class="dropdown-item" href="javascript:void(0);">Update</a>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="card-body mt-mg-1">
-                            <h6 class="mb-2">Total Profit</h6>
+                            <h6 class="mb-2">Net Difference</h6>
                             <div class="d-flex flex-wrap align-items-center mb-2 pb-1">
-                                <h4 class="mb-0 me-2">$25.6k</h4>
-                                <small class="text-success mt-1">+42%</small>
+                                <h4 class="mb-0 me-2">Rp. {{ number_format((abs($netMonthIncome)), 0, '.', ',') }}</h4>
+                                @if ($netMonthIncome > 0)
+                                    <small class="text-success mt-1">+{{ abs(round($incomeMonthGrowth,2)) }}% </small>
+                                @else
+                                    <small class="text-danger mt-1">-{{ abs(round($incomeMonthGrowth,2)) }}% </small>
+                                @endif
+
                             </div>
                             <small>Weekly Project</small>
                         </div>
@@ -282,7 +302,7 @@
                                     <i class="mdi mdi-wallet-travel mdi-24px"></i>
                                 </div>
                             </div>
-                            <div class="dropdown">
+                            {{-- <div class="dropdown">
                                 <button class="btn p-0" type="button" id="newProjectID" data-bs-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                     <i class="mdi mdi-dots-vertical mdi-24px"></i>
@@ -292,15 +312,15 @@
                                     <a class="dropdown-item" href="javascript:void(0);">Share</a>
                                     <a class="dropdown-item" href="javascript:void(0);">Update</a>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="card-body mt-mg-1">
-                            <h6 class="mb-2">New Project</h6>
+                            <h6 class="mb-2">Jumlah Catatan</h6>
                             <div class="d-flex flex-wrap align-items-center mb-2 pb-1">
-                                <h4 class="mb-0 me-2">862</h4>
-                                <small class="text-danger mt-1">-18%</small>
+                                <h4 class="mb-0 me-2">{{$MonthCount}}</h4>
+                                {{-- <small class="text-danger mt-1">-18%</small> --}}
                             </div>
-                            <small>Yearly Project</small>
+                            <small>Pengeluaran</small>
                         </div>
                     </div>
                 </div>
