@@ -201,7 +201,23 @@ class Analytics extends Controller
         return view('content.dashboard.monthly-report',[
             'expenses' => Expense::where('user_id',auth()->user()->id)->get(),
             'types' => Type::where('user_id',auth()->user()->id)->get(),
-            'months' => Expense::select(DB::raw('DISTINCT MONTHNAME(date) as month'))->get(),
+            'months' => Expense::select(DB::raw('DISTINCT MONTHNAME(date) as month'))
+                ->orderBy(DB::raw('MONTH(date)'), 'asc')
+                ->get(),
+
+            'years' => Expense::select(DB::raw('DISTINCT YEAR(date) as year'))
+                ->orderBy(DB::raw('YEAR(date)'), 'asc')
+                ->get(),
+
+            'monthlyExpenses' => Expense::selectRaw('MONTH(date) as month_number, MONTHNAME(date) as month, YEAR(date) as year, type_id, SUM(amount) as total_amount')
+                ->groupBy(DB::raw('MONTH(date)'))
+                ->groupBy(DB::raw('MONTHNAME(date)'))
+                ->groupBy(DB::raw('YEAR(date)'))
+                ->groupBy('type_id')
+                ->orderBy(DB::raw('MONTH(date)'), 'asc')
+                ->get(),
+
+            // dd($monthlyExpenses),
 
             // Get the start and end of the current month
             $startOfMonth = Carbon::now()->startOfMonth()->toDateString(),

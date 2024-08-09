@@ -1,3 +1,4 @@
+{{-- {{ dd($years)}} --}}
 @extends('layouts/contentNavbarLayout')
 
 @section('title', 'Dashboard')
@@ -43,14 +44,14 @@
         <div class="col-md-12 col-lg-4">
             <div class="card" style="height: 100%; display: flex; flex-direction: column; flex:1;">
                 <div class="card-body">
-                    <h4 class="card-title mb-2">Selamat Datang, {{auth()->user()->name}} !</h4>
+                    {{-- <h4 class="card-title mb-2">Selamat Datang, {{auth()->user()->name}} !</h4>
                     @if ( $TodayCount == 0)
                         <p class="pb-0">Kamu belum melakukan pengisian catatan keuangan hari ini :( </p>
                     @else
                         <p class="pb-0">Yeay, Kamu hari ini sudah melakukan pengisisan catatan keuangan :) </p>
                     @endif
                     <h4 class="text-primary mb-1">{{ $TodayCount }}</h4>
-                    <p class="mb-2 pb-1">Catatan keuangan</p>
+                    <p class="mb-2 pb-1">Catatan keuangan</p> --}}
                     {{-- <a href="javascript:;" class="btn btn-sm btn-primary">Ayo Lihat di sini !</a> --}}
                 </div>
                 {{-- <img src="{{ asset('assets/img/icons/misc/triangle-light.png') }}"
@@ -65,7 +66,7 @@
         <div class="col-lg-8">
             <div class="card" style="height: 100%; display: flex; flex-direction: column; flex:1;">
                 <div class="card-header">
-                    <div class="d-flex align-items-center justify-content-between">
+                    {{-- <div class="d-flex align-items-center justify-content-between">
                         <h5 class="card-title m-0 me-2"> Summary </h5>
                         <div class="dropdown">
                             <button class="btn p-0" type="button" id="transactionID" data-bs-toggle="dropdown"
@@ -83,10 +84,10 @@
                         <p class="mt-3"><span class="fw-medium">Pemasukanmu lebih besar dari Pengeluaranmu</span> 😎 Pertahankan !</p>
                     @else
                         <p class="mt-3"><span class="fw-medium">Pengeluaranmu lebih besar dari Pemasukanmu</span> lebih hemat lagi yaa !</p>
-                    @endif
+                    @endif --}}
                 </div>
                 <div class="card-body">
-                    <div class="row g-3">
+                    {{-- <div class="row g-3">
                         <div class="col-md-4">
                             <div class="d-flex align-items-center">
                                 <div class="avatar">
@@ -126,7 +127,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
@@ -135,11 +136,12 @@
         <!-- Data Tables -->
         <div class="col-12">
             <div class="card">
-                <h4 class="m-4">Rekap Pengeluaran Tahun 2024 : </h4>
+                <h4 class="m-4">Rekap Pengeluaran : </h4>
                 <div class="table-responsive mx-3 mb-3">
                     <table id="basictable" class="table">
                         <thead class="table-dark">
                             <tr>
+                                <th class="text-truncate"></th>
                                 <th class="text-truncate"></th>
                                 @foreach ( $types as $type )
                                     <th class="text-center" colspan="2">{{$type->name}}</th>
@@ -148,6 +150,7 @@
                                 {{-- <th class="text-center">User</th> --}}
                             </tr>
                             <tr>
+                                <th class="text-truncate">Tahun</th>
                                 <th class="text-truncate">Bulan</th>
                                 @foreach ( $types as $type )
                                     <th class="text-center" >Amount</th>
@@ -157,22 +160,49 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ( $months as $month )
-                            <tr>
-                                {{-- <th class="text-center" scope="row"></th> --}}
-                                <td>{{ $month->month }}</td>
-                                {{-- <td data-sort='YYYYMMDD'>
-                                    <div class="d-flex align-items-center">
-                                        {{ \Carbon\Carbon::parse($transaction->date)->format('m/d/Y') }}
-                                    </div>
-                                </td>
-                                <td class="align-left">{{ $transaction->title }}</td>
-                                <td class="text-center">
-                                    <span class="badge bg-label-{{ $transaction->color_type }}"> {{ $transaction->type }}</span>
-                                </td>
-                                <td class="text-end">Rp. {{ number_format($transaction->amount, 2, '.', ',') }} </td>
-                                <td class="text-left" style="white-space: nowrap"><i class="mdi mdi-{{ $transaction->icon }} mdi-10px" style="color: {{ $transaction->color}}"></i> {{ $transaction->name }}</td> --}}
-                            </tr>
+                            @foreach ( $years as $year )
+                                @foreach ( $months as $month )
+                                <tr>
+                                    <td>{{ $year->year }}</td>
+                                    {{-- <th class="text-center" scope="row"></th> --}}
+                                    <td>{{ $month->month }}</td>
+                                    @foreach ( $types as $type )
+                                        <td class="text-end">
+                                            <p>
+                                                Rp. {{ number_format(
+                                                        $monthlyExpenses
+                                                        ->where('month', $month->month)
+                                                        ->where('year', $year->year)
+                                                        ->where('type_id', $type->id)
+                                                        ->sum('total_amount')
+                                                    , 0, '.', ',') }}
+                                            </p>
+                                        </td>
+                                        <td class="text-end">
+                                            <p>%</p>
+                                        </td>
+                                    @endforeach
+                                    <td class="text-end">
+                                        Rp. {{ number_format(
+                                            $monthlyExpenses
+                                            ->where('month', $month->month)
+                                            ->where('year', $year->year)
+                                            ->sum('total_amount')
+                                        , 0, '.', ',') }}
+                                    </td>
+                                    {{-- <td data-sort='YYYYMMDD'>
+                                        <div class="d-flex align-items-center">
+                                            {{ \Carbon\Carbon::parse($transaction->date)->format('m/d/Y') }}
+                                        </div>
+                                    </td>
+                                    <td class="align-left">{{ $transaction->title }}</td>
+                                    <td class="text-center">
+                                        <span class="badge bg-label-{{ $transaction->color_type }}"> {{ $transaction->type }}</span>
+                                    </td>
+                                    <td class="text-end">Rp. {{ number_format($transaction->amount, 2, '.', ',') }} </td>
+                                    <td class="text-left" style="white-space: nowrap"><i class="mdi mdi-{{ $transaction->icon }} mdi-10px" style="color: {{ $transaction->color}}"></i> {{ $transaction->name }}</td> --}}
+                                </tr>
+                                @endforeach
                             @endforeach
                         </tbody>
                     </table>
